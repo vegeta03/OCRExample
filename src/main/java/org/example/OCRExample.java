@@ -7,23 +7,23 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 public class OCRExample {
     public static void main(String[] args) {
         // Path to the folder containing image files
-        String folderPath = "src/main/resources/ocr";
+        String imagesToOCRPath = "src/main/resources/ocr";
+        String tessdataPath = "src/main/resources/Tesseract-OCR/tessdata";
 
         // Use absolute path relative to the project root
-        Path folderAbsolutePath = Paths.get(System.getProperty("user.dir"), folderPath);
+        // Path imagesToOCRAbsolutePath = Paths.get(System.getProperty("user.dir"), imagesToOCRPath);
 
         Tesseract tesseract = new Tesseract();
-        tesseract.setDatapath("C:/Program Files/Tesseract-OCR/tessdata");
+        tesseract.setDatapath(tessdataPath);
         tesseract.setLanguage("eng");
 
         // Modern error handling and file processing
-        try (var filesStream = Files.walk(Path.of(folderPath))) {
+        try (var filesStream = Files.walk(Path.of(imagesToOCRPath))) {
             List<File> files = filesStream
                     .filter(Files::isRegularFile)
                     .map(Path::toFile)
